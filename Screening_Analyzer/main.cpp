@@ -3,113 +3,158 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
+#include <conio.h>
+#include <stdio.h>
+#include <process.h>
 #include <bits/stdc++.h>
 using namespace std;
-void create();
-void read_record();
+
+//function which will find the required mesh number
+string find_mesh_number(string csv_name);
+
+//function which will find the effectiveness
+double find_effectiveness(string csv_name, string mesh, int choice);
+
 int main()
 {
-    cout << "Hello world!" << endl;
-    //create();
-    read_record();
+    char name_of_csv[100];
+    string product;
+
+    cout << setw(70)<< "SCREENING ANALYZER!" << endl << endl ;
+    cout << "This program will help you to perform Screen Analysis faster with high accuracy ."
+         << "This Exploratory project was done under the guidance of Mrs. Bhavna Verma" << endl << endl ;
+
+    cout << "Press any key to continue ..." << endl << endl ;
+    getch();
+
+    cout << "Enter the name of Csv file from which the values will be imported : ";
+    gets(name_of_csv);
+
+    string mesh_number = find_mesh_number( name_of_csv );
+
+    //Error handling for incorrect file name
+    if(mesh_number == "\0"){
+        cout << endl << name_of_csv << ".csv not found!";
+        exit(1);
+    }
+
+    int choice;
+
+    //Enforcing to enter the between 1 & 2
+    do{
+        cout << endl << "The desired product is Oversize(enter 1) or Undersize(enter 2) ? : ";
+        cin >> choice;
+
+        switch(choice){
+            case 1: product = "Oversize";
+                break;
+            case 2: product = "Undersize";
+                break;
+            default: cout << endl << "Try to choose between 1 or 2" << endl;
+        }
+    }while(choice!=1 && choice !=2);
+
+    double effectiveness = find_effectiveness( name_of_csv, mesh_number, choice );
+
+    cout << endl <<"The Effectiveness of the Mesh number "<< mesh_number << " for the "
+         << product << " product is : " << effectiveness << "%" << endl << endl ;
+
+    cout << "This project was made by -" << endl << endl;
+    cout << "19045023 Arjun Gupta" << endl;
+    cout << "19045146 Aaryam Sthapak" << endl;
+    cout << "19045015 Amit Singh Rawat" << endl;
+    cout << "19045017 Anjali Meena" << endl;
+
     return 0;
 }
 
-void read_record()
-{
+string find_mesh_number(string csv_name){
+    int length = 0;
 
-	// File pointer
-	fstream fin;
+    //Opening the file
+    fstream fin;
+    fin.open(csv_name+".csv", ios::in);
 
-	// Open an existing file
-	fin.open("reportcard.csv", ios::in);
+    if(fin){
+        vector<string> row, mesh_values;
+        string line, mesh;
 
-	// Get the roll number
-	// of which the data is required
-	int rollnum, roll2, count = 0;
-	cout << "Enter the roll number "
-		<< "of the student to display details: ";
-	cin >> rollnum;
+        cout << endl <<"The Mesh numbers available in " << csv_name << ".csv file are :" << endl << endl;
 
-	// Read the Data from the file
-	// as String Vector
-	vector<string> row;
-	string line, word, temp;
+        //Storing the mesh numbers available
+        while (fin>>mesh) {
+        length++;
+        getline(fin, line);
+        cout << "index " << length << "-> " << mesh <<endl;
+        mesh_values.push_back(mesh);
+        }
 
-	while (fin >> temp) {
+        int index = 0;
 
-		row.clear();
+        //Enforcing to enter a valid mesh index
+        do{
+        cout << endl << "Enter the index of the Mesh number for which the computation must be performed : ";
+        cin >> index;
+        if(!(index<=length && index>0)){
+            cout << endl << "Try to choose between 1 and " << length << endl;
+        }
+        }while(!(index<=length && index>0));
 
-		// read an entire row and
-		// store it in a string variable 'line'
-		getline(fin, line);
-
-		// used for breaking words
-		stringstream s(line);
-
-		// read every column data of a row and
-		// store it in a string variable, 'word'
-		while (getline(s, word, ',')) {
-
-			// add all the column data
-			// of a row to a vector
-			row.push_back(word);
-		}
-
-		// convert string to integer for comparision
-		roll2 = stoi(temp);
-
-		// Compare the roll number
-		if (roll2 == rollnum) {
-
-			// Print the found data
-			count = 1;
-			cout << "Details of Roll " << roll2 << " : \n";
-			cout << "Name: " << row[0] << "\n";
-			cout << "Maths: " << row[1] << "\n";
-			cout << "Physics: " << row[2] << "\n";
-			cout << "Chemistry: " << row[3] << "\n";
-			cout << "Biology: " << row[4] << "\n";
-			break;
-		}
-	}
-	if (count == 0)
-		cout << "Record not found\n";
+        //Returning the mesh number
+        return mesh_values[index-1];
+    }
+    else {
+        //Returning null if file was not found
+        return "\0";
+    }
 }
 
+double find_effectiveness(string csv_name, string mesh_number, int choice){
+    double result, Xf=0, Xd=0, Xb=0;
 
-void create()
-{
-	// file pointer
-	fstream fout;
+    //Opening file (as file was opened previously so no need for considering "file not found" error)
+    fstream fin;
+    fin.open(csv_name+".csv", ios::in);
 
-	// opens an existing csv file or creates a new file.
-	fout.open("reportcard.csv", ios::out | ios::app);
+    vector<string> row;
+	string line, word, mesh;
 
-	cout << "Enter the details of 5 students:"
-		<< " roll name maths phy chem bio";
-	cout<< endl;
+	//Storing the cumulative values of feed , product and reject
+    while (fin >> mesh) {
+		row.clear();
+        getline(fin, line);
+		stringstream s(line);
+		while (getline(s, word, ',')) {
+			row.push_back(word);
+		}
+		Xf = Xf + stod(row[0]);
+		Xd = Xd + stod(row[1]);
+		Xb = Xb + stod(row[2]);
+        if(mesh_number == mesh){
+            break;
+        }
+    }
 
-	int i, roll, phy, chem, math, bio;
-	string name;
+    cout << endl << "The cumulative values are - " <<endl ;
+    cout <<"Xf: " << Xf << endl;
+    cout <<"Xd: " << Xd << endl;
+    cout <<"Xb: " << Xb << endl;
 
-	// Read the input
-	for (i = 0; i < 5; i++) {
-
-		cin >> roll
-			>> name
-			>> math
-			>> phy
-			>> chem
-			>> bio;
-
-		// Insert the data to file
-		fout << roll << ", "
-			<< name << ", "
-			<< math << ", "
-			<< phy << ", "
-			<< chem << ", "
-			<< bio
-			<< "\n";
-	}
+    if(choice == 1){
+        //If the desired product is oversize
+        result = ((Xd*(Xf-Xb))/(Xf*(Xd-Xb)))*(1-(((Xf-Xb)*(1-Xd))/((Xd-Xb)*(1-Xf))));
+        return result*100;
+    }
+    else if(choice == 2){
+        //If the desired product is undersize
+        Xf = 1-Xf;
+        Xd = 1-Xd;
+        Xb = 1-Xb;
+        result = ((Xd*(Xf-Xb))/(Xf*(Xd-Xb)))*(1-(((Xf-Xb)*(1-Xd))/((Xd-Xb)*(1-Xf))));
+        return result*100;
+    }
+    else{
+        //If wrong choice was given return 0
+        return 0;
+    }
 }
