@@ -1,0 +1,11 @@
+# depslib dependency file v1.0
+1608574574 source:d:\vscode\cpp_projects\revision\main.cpp
+	<iostream>
+	"binary_conversion.cpp"
+
+1608574400 source:d:\vscode\cpp_projects\revision\binary_conversion.cpp
+	<iostream>
+
+1608574590 d:\vscode\cpp_projects\revision\binary_conversion.cpp
+	<iostream>
+
