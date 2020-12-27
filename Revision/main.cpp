@@ -19,7 +19,7 @@ class choice{
 
 choice Choices[]={
     choice(1,"Convert Decimal to Binary"),
-    choice(2,"Entry for a new functionality")
+    choice(2,"Convert Binary to Decimal")
 };
 
 int main()
@@ -39,12 +39,10 @@ int main()
     }while(!(input>=1 && input<=choiceLength));
 
     switch(input){
-        case 1: cout<<"\nEnter a decimal number"<<endl;
-                int number;
-                cin>>number;
-                cout<<endl<<decimalToBinary2(number);
+        case 1: BaseConvert object = BaseConvert();
+                object.takeInput();
+                cout<<endl<<object.decimalToBinary2();
                 break;
-        default:cout<<"\n Wrong input";
     }
     return 0;
 }
