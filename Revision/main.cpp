@@ -38,10 +38,15 @@ int main()
            cout<<" Wrong choice"<<endl;
     }while(!(input>=1 && input<=choiceLength));
 
+    BaseConvert baseConvert;
     switch(input){
-        case 1: BaseConvert object = BaseConvert();
-                object.takeInput();
-                cout<<endl<<object.decimalToBinary2();
+        case 1: baseConvert = BaseConvert();
+                baseConvert.takeInput();
+                cout<<endl<<baseConvert.decimalToBinary2();
+                break;
+        case 2: baseConvert = BaseConvert();
+                baseConvert.takeBinaryInput();
+                cout<<endl<<baseConvert.binaryTodecimal();
                 break;
     }
     return 0;

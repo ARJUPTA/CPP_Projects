@@ -6,7 +6,7 @@ using namespace std;
 class BaseConvert{
 
 private:
-    long int num;
+    long long num;
 
 public:
     BaseConvert(){
@@ -15,6 +15,13 @@ public:
 
     void takeInput(){
         cout<<"\nEnter a decimal number"<<endl;
+        long int number;
+        cin>>number;
+        this->num = number;
+    }
+
+    void takeBinaryInput(){
+        cout<<"\nEnter a binary number"<<endl;
         long int number;
         cin>>number;
         this->num = number;
@@ -31,8 +38,16 @@ public:
         return n;
     }
 
-    void binaryTodecimal(){
-
+    long long binaryTodecimal(){
+        long long result = 0;
+        long long power = 1;
+        long n = this->num;
+        while(n>0){
+            result = result + power*(n%10);
+            power*=2;
+            n/=10;
+        }
+        return result;
     }
 
     int decimalToBinary2(){
