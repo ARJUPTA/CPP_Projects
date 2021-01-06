@@ -24,7 +24,11 @@ choice Choices[]={
     choice(3,"Get Bit at a Position"),
     choice(4,"Set Bit at a Position"),
     choice(5,"Clear Bit at a Position"),
-    choice(6,"Update Bit at a Position")
+    choice(6,"Update Bit at a Position"),
+    choice(7,"Maximum Subarray sum"),
+    choice(8,"Print all Subarrays"),
+    choice(9,"Path length to reach target in maze"),
+    choice(10,"Maximum profit to keep in a bag"),
 };
 
 int main()
