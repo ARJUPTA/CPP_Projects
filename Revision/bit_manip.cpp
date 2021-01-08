@@ -16,7 +16,7 @@ class BitManip{
 	    cout<<"Give the position to set bit to 1 :";
 	    int pos;
 	    cin>>pos;
-	    this->num = (this->num)||(1<<pos);
+	    this->num = (this->num)|(1<<pos);
 	    return this->num;
 	}
 
@@ -24,14 +24,14 @@ class BitManip{
 	    cout<<"Give the position to check :";
 	    int pos;
 	    cin>>pos;
-	    return ((this->num)&&(1<<pos))!=0;
+	    return ((this->num)&(1<<pos))!=0;
 	}
 
 	int clearBit(){
         cout<<"Give the position to clear bit at :";
 	    int pos;
 	    cin>>pos;
-	    return (this->num)&&(~(1<<pos));
+	    return (this->num)&(~(1<<pos));
 	}
 
 	int updateBit(){
@@ -41,8 +41,8 @@ class BitManip{
 	    cout<<"Give the value to be set here(0 or 1) :";
 	    int value;
 	    cin>>value;
-	    this->num = (this->num)&&(~(1<<pos));
-	    this->num = (this->num)||(value<<pos);
+	    this->num = (this->num)&(~(1<<pos));
+	    this->num = (this->num)|(value<<pos);
 	    return this->num;
 	}
 };

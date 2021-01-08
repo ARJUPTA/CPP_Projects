@@ -12,7 +12,7 @@
 1609179541 d:\vscode\cpp_projects\revision\base_convert.cpp
 	<iostream>
 
-1609524421 source:d:\code\cpp\cpp_projects\revision\main.cpp
+1609956544 source:d:\code\cpp\cpp_projects\revision\main.cpp
 	<iostream>
 	"base_convert.cpp"
 	"bit_manip.cpp"
@@ -20,6 +20,6 @@
 1609393686 d:\code\cpp\cpp_projects\revision\base_convert.cpp
 	<iostream>
 
-1609524908 d:\code\cpp\cpp_projects\revision\bit_manip.cpp
+1610128211 d:\code\cpp\cpp_projects\revision\bit_manip.cpp
 	<iostream>
 
